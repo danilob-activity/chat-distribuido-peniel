@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class Servidor extends Thread {
+public class servidor extends Thread {
     private static ArrayList<BufferedWriter> clientes;
     private static ServerSocket server;
     private String nome;
@@ -28,7 +28,7 @@ public class Servidor extends Thread {
      * @param com do tipo Socket
      */
 
-    public Servidor(Socket con) {
+    public servidor(Socket con) {
         this.con = con;
         try {
             in = con.getInputStream();
@@ -107,7 +107,7 @@ public class Servidor extends Thread {
                 System.out.println("Aguardando conexão...");
                 Socket con = server.accept();
                 System.out.println("Cliente conectado...");
-                Thread t = new Servidor(con);
+                Thread t = new servidor(con);
                 t.start();
             }
 
