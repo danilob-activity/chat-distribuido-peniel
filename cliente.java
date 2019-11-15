@@ -129,6 +129,11 @@ public class cliente extends JFrame implements ActionListener, KeyListener {
                 else
                     texto.append(msg + "\r\n");
             }
+
+            bfw.close();
+            ouw.close();
+            ou.close();
+            socket.close();
     }
 
     /***
@@ -139,10 +144,10 @@ public class cliente extends JFrame implements ActionListener, KeyListener {
     public void sair() throws IOException {
 
         enviarMensagem("Sair");
-        bfw.close();
-        ouw.close();
-        ou.close();
-        socket.close();
+        //bfw.close();
+        //ouw.close();
+        //ou.close();
+        //socket.close();
     }
 
     @Override

@@ -9,6 +9,8 @@ import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -87,6 +89,22 @@ public class servidor extends Thread {
         }
     }
 
+    public void sendToAllServer(BufferedWriter bwSaida, String msg) throws IOException {
+
+        for (BufferedWriter bw : clientes) {
+                bw.write(msg + "\n");
+                bw.flush();   
+        }
+    }
+
+    /** método para retornar a data */
+
+    public String getCurrentTime(){
+        Calendar calendar = calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        System.out.println(formatter.format(calendar.getTime()));
+        return ""+formatter.format(calendar.getTime());
+    }
     /**
      * Método main
      */
