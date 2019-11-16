@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - cliente",
+            "request": "launch",
+            "mainClass": "cliente"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - servidor",
+            "request": "launch",
+            "mainClass": "servidor"
+        }
+    ]
+}

@@ -97,12 +97,12 @@ public class cliente extends JFrame implements ActionListener, KeyListener {
      */
     public void enviarMensagem(String msg) throws IOException {
 
-        if (msg.equals("Sair")) {
-            bfw.write("Desconectado \r\n");
-            texto.append("Desconectado \r\n");
+        if (msg.equals("::Sair")) {
+            bfw.write("::Sair");
+            //texto.append("Desconectado \r\n");
         } else {
             bfw.write(msg + "\r\n");
-            texto.append(txtNome.getText() + " diz -> " + txtMsg.getText() + "\r\n");
+            //texto.append(txtNome.getText() + " diz -> " + txtMsg.getText() + "\r\n");
         }
         bfw.flush();
         txtMsg.setText("");
@@ -120,11 +120,11 @@ public class cliente extends JFrame implements ActionListener, KeyListener {
         BufferedReader bfr = new BufferedReader(inr);
         String msg = "";
 
-        while (!"Sair".equalsIgnoreCase(msg))
+        while (!"::Sair".equalsIgnoreCase(msg))
 
             if (bfr.ready()) {
                 msg = bfr.readLine();
-                if (msg.equals("Sair"))
+                if (msg.equals("::Sair"))
                     texto.append("Servidor caiu! \r\n");
                 else
                     texto.append(msg + "\r\n");
@@ -134,6 +134,7 @@ public class cliente extends JFrame implements ActionListener, KeyListener {
             ouw.close();
             ou.close();
             socket.close();
+        
     }
 
     /***
@@ -143,11 +144,7 @@ public class cliente extends JFrame implements ActionListener, KeyListener {
      */
     public void sair() throws IOException {
 
-        enviarMensagem("Sair");
-        //bfw.close();
-        //ouw.close();
-        //ou.close();
-        //socket.close();
+        enviarMensagem("::Sair");
     }
 
     @Override

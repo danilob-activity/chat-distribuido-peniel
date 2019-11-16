@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 public class servidor extends Thread {
     private static ArrayList<BufferedWriter> clientes;
@@ -56,12 +58,18 @@ public class servidor extends Thread {
             BufferedWriter bfw = new BufferedWriter(ouw);
             clientes.add(bfw);
             nome = msg = bfr.readLine();
+            //System.out.println(nome);
+            getCurrentTime();
+            sendToAllServer(null, getCurrentTime()+"... " +msg+" entrou no chat!");
 
-            while (!"Sair".equalsIgnoreCase(msg) && msg != null) {
+            while (!"::Sair".equalsIgnoreCase(msg) && msg != null ){
                 msg = bfr.readLine();
                 sendToAll(bfw, msg);
                 System.out.println(msg);
             }
+            sendToAllServer(null, getCurrentTime()+"... " +nome+ " saiu do chat!");
+
+            clientes.remove(bfw);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,8 +89,8 @@ public class servidor extends Thread {
 
         for (BufferedWriter bw : clientes) {
             bwS = (BufferedWriter) bw;
-            if (!(bwSaida == bwS)) {
-                bw.write(nome + " -> " + msg + "\r\n");
+            if (!("::Sair".equalsIgnoreCase(msg) && (bwSaida == bwS))) {
+                bw.write("("+getCurrentTime()+") "+nome + "\n -> " + msg + "\r\n");
                 bw.flush();
             }
         }
@@ -99,7 +107,7 @@ public class servidor extends Thread {
     /** método para retornar a data */
 
     public String getCurrentTime(){
-        Calendar calendar = calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         System.out.println(formatter.format(calendar.getTime()));
         return ""+formatter.format(calendar.getTime());
