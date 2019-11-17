@@ -62,7 +62,7 @@ public class servidor extends Thread {
             getCurrentTime();
             sendToAllServer(null, getCurrentTime()+"... " +msg+" entrou no chat!");
 
-            while (!"::Sair".equalsIgnoreCase(msg) && msg != null ){
+            while (!" -> ::Sair".equalsIgnoreCase(msg) && msg != null ){
                 msg = bfr.readLine();
                 sendToAll(bfw, msg);
                 System.out.println(msg);
@@ -89,8 +89,8 @@ public class servidor extends Thread {
 
         for (BufferedWriter bw : clientes) {
             bwS = (BufferedWriter) bw;
-            if (!("::Sair".equalsIgnoreCase(msg) && (bwSaida == bwS))) {
-                bw.write("("+getCurrentTime()+") "+nome + "\n -> " + msg + "\r\n");
+            if (!(" -> ::Sair".equalsIgnoreCase(msg) && (bwSaida == bwS))) {
+                bw.write("("+getCurrentTime()+")" + msg + "\r\n");
                 bw.flush();
             }
         }

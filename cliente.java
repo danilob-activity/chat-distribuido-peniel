@@ -95,14 +95,15 @@ public class cliente extends JFrame implements ActionListener, KeyListener {
      * @param msg do tipo String
      * @throws IOException retorna IO Exception caso dê algum erro.
      */
-    public void enviarMensagem(String msg) throws IOException {
-
-        if (msg.equals("::Sair")) {
-            bfw.write("::Sair");
+    public void enviarMensagem(String n, String msg) throws IOException {
+        
+        if (msg.equals(" -> ::Sair")) {
+            //txtNome.getText();
+            bfw.write(msg+"\r\n");
             //texto.append("Desconectado \r\n");
-        } else {
-            bfw.write(msg + "\r\n");
-            //texto.append(txtNome.getText() + " diz -> " + txtMsg.getText() + "\r\n");
+       } else {
+        bfw.write(txtNome.getText() + " -> " + msg + "\r\n");
+            
         }
         bfw.flush();
         txtMsg.setText("");
@@ -120,11 +121,11 @@ public class cliente extends JFrame implements ActionListener, KeyListener {
         BufferedReader bfr = new BufferedReader(inr);
         String msg = "";
 
-        while (!"::Sair".equalsIgnoreCase(msg))
+        while (!" -> ::Sair".equalsIgnoreCase(msg))
 
             if (bfr.ready()) {
                 msg = bfr.readLine();
-                if (msg.equals("::Sair"))
+                if (msg.equals(" -> ::Sair"))
                     texto.append("Servidor caiu! \r\n");
                 else
                     texto.append(msg + "\r\n");
@@ -144,7 +145,7 @@ public class cliente extends JFrame implements ActionListener, KeyListener {
      */
     public void sair() throws IOException {
 
-        enviarMensagem("::Sair");
+        enviarMensagem(txtNome.getText(), " -> ::Sair");
     }
 
     @Override
@@ -152,7 +153,7 @@ public class cliente extends JFrame implements ActionListener, KeyListener {
 
         try {
             if (e.getActionCommand().equals(btnSend.getActionCommand()))
-                enviarMensagem(txtMsg.getText());
+                enviarMensagem(txtNome.getText(), txtMsg.getText());
             else if (e.getActionCommand().equals(btnSair.getActionCommand()))
                 sair();
         } catch (IOException e1) {
@@ -166,7 +167,7 @@ public class cliente extends JFrame implements ActionListener, KeyListener {
 
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
-                enviarMensagem(txtMsg.getText());
+                enviarMensagem(txtNome.getText(), txtMsg.getText());
             } catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
